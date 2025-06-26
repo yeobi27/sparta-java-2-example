@@ -54,6 +54,7 @@ public class UserService {
     User user = getUser(userId);
 
     // 유저의 개인정보변경 로직
+    // 나중에 Mapper 방식으로 변경하기
     user.setName(request.getName());
     user.setEmail(request.getEmail());
 
