@@ -36,7 +36,7 @@ public class UserService {
         .id(user.getId())
         .name(user.getName())
         .email(user.getEmail())
-        .createAt(user.getCreatedAt())
+        .createdAt(user.getCreatedAt())
         .build();
   }
 
@@ -45,7 +45,7 @@ public class UserService {
     userRepository.save(User.builder()
         .name(request.getName())
         .email(request.getEmail())
-        .passwordHash(request.getPassword())
+        .passwordHash(request.getPasswordHash())
         .build());
   }
 

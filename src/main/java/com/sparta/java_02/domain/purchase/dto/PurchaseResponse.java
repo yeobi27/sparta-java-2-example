@@ -1,5 +1,6 @@
 package com.sparta.java_02.domain.purchase.dto;
 
+import java.math.BigDecimal;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -15,9 +16,14 @@ import lombok.experimental.FieldDefaults;
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class PurchaseResponse {
 
-  Long userId;
-  Long productId;
-  Integer quantity;
+  Long purchaseId; // Entity의 'id'와 이름이 다름
+  String username;   // Entity의 'user.username'에서 가져와야 함
+  BigDecimal totalPrice;
   String shippingAddress;
+
+//  Long userId;
+//  Long purchaseId;
+//  Integer quantity;
+//  String shippingAddress;
 
 }

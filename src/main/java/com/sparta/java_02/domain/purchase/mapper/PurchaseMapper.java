@@ -8,10 +8,9 @@ import org.mapstruct.Mapping;
 @Mapper(componentModel = "spring")
 public interface PurchaseMapper {
 
-  // source -> Purchase , target -> PurchaseResponse
-  @Mapping(source = "user.id", target = "userId")
-  @Mapping(source = "purchaseItems[0].product.id", target = "productId")
-  @Mapping(source = "purchaseItems[0].quantity", target = "quantity")
+  //  //source -> Purchase , target -> PurchaseResponse
+  @Mapping(source = "id", target = "purchaseId")
+  @Mapping(source = "user.name", target = "username")
   @Mapping(source = "shippingAddress", target = "shippingAddress")
   PurchaseResponse fromEntity(Purchase purchase);
 }

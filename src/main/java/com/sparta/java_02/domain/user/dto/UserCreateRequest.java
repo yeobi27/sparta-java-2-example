@@ -24,6 +24,6 @@ public class UserCreateRequest {
   private String name;
   @NotBlank
   @Pattern(regexp = "^(?=.*[A-Za-z])(?=.*\\d)(?=.*[!@#$%^&*()_+\\-=\\[\\]{};':\"\\\\|,.<>/?]).{8,}$", message = "비밀번호형식이 아닙니다.")
-  private String password;
+  private String passwordHash;
 
 }
