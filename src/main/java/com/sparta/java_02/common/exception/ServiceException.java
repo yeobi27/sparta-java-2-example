@@ -15,7 +15,7 @@ public class ServiceException extends RuntimeException {
 
   public ServiceException(ServiceExceptionCode response) {
     super(response.getMessage()); // super 가 들어간 이유는 ? super 는 상속받은 부모클래스의 생성자를 호출한다. 그리고
-    // 예외 메시지(message) 값을 RuntimeException에 그래야
+    // 예외 메시지(message) 값을 RuntimeException에 ?? 그래야
     // Exception 처리 로직에서 getMessage() 등으로 기본 메시지 접근이 가능
     this.code = response.name();
     this.message = super.getMessage();
