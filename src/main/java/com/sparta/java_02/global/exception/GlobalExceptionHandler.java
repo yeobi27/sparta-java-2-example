@@ -9,8 +9,14 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-// 얘는 Config 는 아닌데 스프링에게 핸들링할수있는 무언가가 있다고 알려줌
-// 미리 등록해두는것임. @ExceptionHandler
+// 내부적으로 ExceptionHandlerExceptionResolver 라는 컴포넌트가 이 클래스를 추적하고 캐싱함
+// 미리 등록해두는것임.
+
+// 애플리케이션 실행 시 @ControllerAdvice → 스프링이 스캔해서 예외 핸들러로 등록
+// 요청 처리 중 예외 발생
+// ExceptionHandlerExceptionResolver 가 예외를 감지
+// 등록된 @ExceptionHandler 메서드 중 가장 적절한 걸 찾아 실행
+// 그 메서드의 ResponseEntity 결과가 클라이언트로 응답됨
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 

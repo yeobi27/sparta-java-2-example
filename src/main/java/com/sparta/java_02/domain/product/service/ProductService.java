@@ -23,6 +23,15 @@ public class ProductService {
   private final CategoryRepository categoryRepository;
   private final ProductMapper productMapper;
 
+  public List<ProductResponse> searchByName(String keyword){
+    List<Product> products = productRepository.findByNameContaining(keyword);
+
+    return products.stream()
+        .map(productMapper::toResponse)
+//        .toList();  // 리스트 수정을 안해도 될때
+        .collect(Collectors.toList());  // 리스트 수정을 하려고 할때 .add(), .remove() 등등..
+  }
+
   // 1. 상품 등록
   @Transactional
   public ProductResponse create(ProductRequest request){
@@ -34,6 +43,11 @@ public class ProductService {
   }
 
   // 2. 전제 목록 조회
+  //map(x -> something(x))	람다 표현식
+  //map(product -> productMapper.toResponse(product))
+  //map(ClassName::methodName)	메서드 참조 (= 축약 버전)
+  // 즉, Product 리스트들 중 객체 하나씩 ProductResponse 로 
+  // 바꾸는 작업을 하나씩 반복 처리한다는 뜻
   public List<ProductResponse> getAll(){
     return productRepository.findAll().stream()
         .map(productMapper::toResponse)
