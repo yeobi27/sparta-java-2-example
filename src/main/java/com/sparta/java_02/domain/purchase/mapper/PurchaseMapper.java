@@ -1,6 +1,5 @@
 package com.sparta.java_02.domain.purchase.mapper;
 
-import com.sparta.java_02.domain.purchase.dto.PurchaseResponse;
 import com.sparta.java_02.domain.purchase.entity.Purchase;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;

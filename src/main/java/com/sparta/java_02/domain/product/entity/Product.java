@@ -62,7 +62,8 @@ public class Product {  // 상품
   LocalDateTime updatedAt;
 
   @Builder
-  public Product(String name, String description, BigDecimal price, Integer stock, Category category) {
+  public Product(String name, String description, BigDecimal price, Integer stock,
+      Category category) {
     this.name = name;
     this.description = description;
     this.price = price;
@@ -70,10 +71,17 @@ public class Product {  // 상품
     this.category = category;
   }
 
-  public void decreaseStock(int quantity) {
+  public void reduceStock(int quantity) {
     if (this.stock < quantity) {
       throw new ServiceException(ServiceExceptionCode.INSUFFICIENT_STOCK);
     }
     this.stock -= quantity;
+  }
+
+  public void increaseStock(int quantity) {
+    if (this.stock < quantity) {
+      throw new ServiceException(ServiceExceptionCode.INSUFFICIENT_STOCK);
+    }
+    this.stock += quantity;
   }
 }

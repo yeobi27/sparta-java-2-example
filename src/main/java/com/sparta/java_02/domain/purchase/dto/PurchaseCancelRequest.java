@@ -1,6 +1,6 @@
 package com.sparta.java_02.domain.purchase.dto;
 
-import java.util.List;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AccessLevel;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
@@ -8,21 +8,21 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-/* 사용자가 "구매하기" 버튼을 눌렀을 때 프론트에서 전달해주는 값 */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL) // null 필드는 JSON에서 제외
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PurchaseRequest {
+public class PurchaseCancelRequest {
+
+  Long purchaseId;
 
   Long userId;
-
-  List<PurchaseProductRequest> purchaseItems;
-
+//  Long purchaseId;
 //  Long userId;
-//  Long productId;
-//  List<PurchaseProductRequest> purchaseItems;
+//  String productName;
 //  Integer quantity;
-//  String shippingAddress;
+//  BigDecimal price;
+//  BigDecimal totalPrice;
 }

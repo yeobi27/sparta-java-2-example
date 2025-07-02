@@ -9,23 +9,22 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.experimental.FieldDefaults;
 
-/* 주문 완료 후, 주문 번호/주문 정보 등을 응답으로 내려줄 때 */
 @Getter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @JsonInclude(JsonInclude.Include.NON_NULL) // null 필드는 JSON에서 제외
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PurchaseResponse {
+public class PurchaseProductResponse {
 
-  Long purchaseId; // Entity의 'id'와 이름이 다름
-  String username;   // Entity의 'user.username'에서 가져와야 함
+  Long productId;
+
+  String productName;
+
+  Integer quantity;
+
+  BigDecimal price;
+
   BigDecimal totalPrice;
-  String shippingAddress;
-
-//  Long userId;
-//  Long purchaseId;
-//  Integer quantity;
-//  String shippingAddress;
 
 }

@@ -94,4 +94,9 @@ public class Purchase { // 주문
     return purchaseItems;
   }
 
+  public void setTotalPrice(BigDecimal totalPrice) {
+    if (totalPrice.compareTo(BigDecimal.ZERO) >= 0) {
+      this.totalPrice = totalPrice;
+    }
+  }
 }

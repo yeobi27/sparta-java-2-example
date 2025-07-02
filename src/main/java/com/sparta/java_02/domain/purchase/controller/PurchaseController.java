@@ -2,7 +2,6 @@ package com.sparta.java_02.domain.purchase.controller;
 
 import com.sparta.java_02.common.response.ApiResponse;
 import com.sparta.java_02.domain.purchase.dto.PurchaseRequest;
-import com.sparta.java_02.domain.purchase.dto.PurchaseResponse;
 import com.sparta.java_02.domain.purchase.service.PurchaseService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;

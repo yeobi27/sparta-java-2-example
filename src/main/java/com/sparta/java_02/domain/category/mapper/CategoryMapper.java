@@ -13,6 +13,6 @@ public interface CategoryMapper {
   @Mapping(source = "parent.id", target = "parentId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
   CategoryResponse toResponse(Category category);
 
-//  @Mapping(source = "parentId", target = "parent.id")
-//  Category toEntity(CategoryRequest categoryRequest);
+  //  @Mapping(source = "parentId", target = "parent.id")
+  Category toEntity(CategoryRequest categoryRequest);
 }
