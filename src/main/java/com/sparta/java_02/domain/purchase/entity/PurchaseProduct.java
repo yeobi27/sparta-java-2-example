@@ -44,10 +44,10 @@ public class PurchaseProduct {
   BigDecimal price;
 
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "product_id", nullable = false)
+  @JoinColumn(name = "purchase_id", nullable = false)
   Purchase purchase;
   @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "purchase_id", nullable = false)
+  @JoinColumn(name = "product_id", nullable = false)
   Product product;
 
   @CreationTimestamp

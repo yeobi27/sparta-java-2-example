@@ -17,10 +17,9 @@ public class PurchaseController {
 
   private final PurchaseService purchaseService;
 
-  // 구매 로직 전체를 책임 "구매하기" 눌러서 요청
   @PostMapping
-  public ApiResponse<PurchaseResponse> placePurchase(@Valid @RequestBody PurchaseRequest request) {
-    purchaseService.placePurchase(request);
+  public ApiResponse<Void> create(@Valid @RequestBody PurchaseRequest request) {
+    purchaseService.createPurchase(request);
     return ApiResponse.success();
   }
 }

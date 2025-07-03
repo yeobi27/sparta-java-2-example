@@ -54,7 +54,7 @@ public class User {
   @UpdateTimestamp  // UPDATE_TIMESTAMP 와 동일
   LocalDateTime updatedAt;
 
-  @OneToMany(fetch = FetchType.EAGER)
+  @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   List<Purchase> purchases = new ArrayList<>();
 
   // 빌더패턴은 DataClass 를 객체선언해서 값을 올려주려고 할때, 직관적이고 좋다.

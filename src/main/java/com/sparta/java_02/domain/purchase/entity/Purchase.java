@@ -57,8 +57,8 @@ public class Purchase { // 주문
   @Column(nullable = false, length = 20)
   PurchaseStatus status;  // 실제 컬럼상에는 VARCHAR(20)
 
-  @Column(nullable = false, columnDefinition = "TEXT")
-  String shippingAddress;
+//  @Column(nullable = false, columnDefinition = "TEXT")
+//  String shippingAddress;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)
@@ -68,14 +68,14 @@ public class Purchase { // 주문
   LocalDateTime updatedAt;
 
   @OneToMany(mappedBy = "purchase", cascade = CascadeType.ALL, orphanRemoval = true)
-  private List<PurchaseProduct> purchaseItems = new ArrayList<>();
+  private List<PurchaseProduct> purchaseProducts = new ArrayList<>();
 
   @Builder
-  public Purchase(User user, BigDecimal totalPrice, PurchaseStatus status, String shippingAddress) {
+  public Purchase(User user, BigDecimal totalPrice, PurchaseStatus status) {
     this.user = user;
     this.totalPrice = totalPrice;
     this.status = status;
-    this.shippingAddress = shippingAddress;
+//    this.shippingAddress = shippingAddress;
   }
 
   public void setStatus(PurchaseStatus status) {
@@ -86,12 +86,12 @@ public class Purchase { // 주문
 
   // 연관관계 편의 메서드 추가
   public void addPurchaseItem(PurchaseProduct item) {
-    purchaseItems.add(item);
+    purchaseProducts.add(item);
     item.setPurchase(this); // 양방향일 경우 꼭 같이 셋팅!
   }
 
   public List<PurchaseProduct> getPurchaseItems() {
-    return purchaseItems;
+    return purchaseProducts;
   }
 
   public void setTotalPrice(BigDecimal totalPrice) {

@@ -34,7 +34,6 @@ public class PurchaseRepositoryTest {
         .user(user)
         .totalPrice(BigDecimal.valueOf(1000))
         .status(PurchaseStatus.PENDING)
-        .shippingAddress("강남")
         .build();
 
     Purchase savePurchase = purchaseRepository.save(purchase);
@@ -66,7 +65,6 @@ public class PurchaseRepositoryTest {
         .user(user1)
         .totalPrice(BigDecimal.valueOf(1000))
         .status(PurchaseStatus.PENDING)
-        .shippingAddress("강남")
         .build();
 
     Purchase savePurchase1 = purchaseRepository.save(purchase1);
@@ -83,11 +81,10 @@ public class PurchaseRepositoryTest {
         .user(user2)
         .totalPrice(BigDecimal.valueOf(1000))
         .status(PurchaseStatus.PENDING)
-        .shippingAddress("강남")
         .build();
 
     Purchase savePurchase2 = purchaseRepository.save(purchase2);
-    
+
     List<Purchase> purchases = purchaseRepository.findAll();
 //    Purchase purchase = purchaseRepository.findById(7L)
 //        .orElseThrow(() -> new RuntimeException("주문내역이 없음"));

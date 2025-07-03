@@ -71,11 +71,11 @@ public class PurchaseService {
 //  }
 
   @Transactional
-  public Purchase purchase(PurchaseRequest request) {
+  public Purchase createPurchase(PurchaseRequest request) {
     User user = userRepository.findById(request.getUserId())
         .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_FOUND_USER));
 
-    return purchaseProcessService.process(user, request.getPurchaseItems());
+    return purchaseProcessService.process(user, request.getPurchaseProducts());
   }
 
   @Transactional

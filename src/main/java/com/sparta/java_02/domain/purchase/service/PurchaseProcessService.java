@@ -1,5 +1,6 @@
 package com.sparta.java_02.domain.purchase.service;
 
+import com.sparta.java_02.common.enums.PurchaseStatus;
 import com.sparta.java_02.common.exception.ServiceException;
 import com.sparta.java_02.common.exception.ServiceExceptionCode;
 import com.sparta.java_02.domain.product.entity.Product;
@@ -28,10 +29,10 @@ public class PurchaseProcessService {
   private final PurchaseProductRepository purchaseProductRepository;
   private final UserRepository userRepository;
 
-  public Purchase process(User user, List<PurchaseProductRequest> purchaseItems) {
+  public Purchase process(User user, List<PurchaseProductRequest> requests) {
     // 이제 purchase 메서드는 "무엇을 하는지" 명확히 보여준다.
     Purchase purchase = createAndSavePurchase(user);
-    List<PurchaseProduct> purchaseProducts = createAndProcessPurchaseProducts(purchaseItems,
+    List<PurchaseProduct> purchaseProducts = createAndProcessPurchaseProducts(requests,
         purchase);
     BigDecimal totalPrice = calculateTotalPrice(purchaseProducts);
 
@@ -43,6 +44,8 @@ public class PurchaseProcessService {
   private Purchase createAndSavePurchase(User user) {
     return purchaseRepository.save(Purchase.builder()
         .user(user)
+        .totalPrice(BigDecimal.ZERO)
+        .status(PurchaseStatus.COMPLETED)
         .build());
   }
 
