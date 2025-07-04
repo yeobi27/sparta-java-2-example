@@ -5,27 +5,27 @@ import java.util.List;
 public class PurchaseRequestTest {
 
   Long userId;
-  List<PurchaseProductRequestTest> purchaseItems;
+  List<PurchaseProductRequestTest> purchaseProducts;
 
-  public PurchaseRequestTest(Long userId, List<PurchaseProductRequestTest> purchaseItems) {
+  public PurchaseRequestTest(Long userId, List<PurchaseProductRequestTest> purchaseProducts) {
     this.userId = userId;
-    this.purchaseItems = purchaseItems;
+    this.purchaseProducts = purchaseProducts;
   }
 
   public Long getUserId() {
     return userId;
   }
 
-  public List<PurchaseProductRequestTest> getPurchaseItems() {
-    return purchaseItems;
+  public List<PurchaseProductRequestTest> getPurchaseProducts() {
+    return purchaseProducts;
   }
 
   public void setUserId(Long userId) {
     this.userId = userId;
   }
 
-  public void setPurchaseItems(
-      List<PurchaseProductRequestTest> purchaseItems) {
-    this.purchaseItems = purchaseItems;
+  public void setPurchaseProducts(
+      List<PurchaseProductRequestTest> purchaseProducts) {
+    this.purchaseProducts = purchaseProducts;
   }
 }
