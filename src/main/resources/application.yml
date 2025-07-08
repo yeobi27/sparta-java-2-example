@@ -24,6 +24,13 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
         highlight_sql: true
+  data:
+    redis:
+      host: localhost
+      port: 6379
+      password: # 비밀번호가 없다면 비워둡니다.
+      # timeout: 1s
+      # database: 0
 
 # 로깅 레벨 설정
 logging:

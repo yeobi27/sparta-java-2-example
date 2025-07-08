@@ -26,6 +26,7 @@ repositories {
 dependencies {
     implementation('org.springframework.boot:spring-boot-starter-web') {
         exclude group: 'org.springframework.boot', module: 'spring-boot-starter-tomcat'
+        // 별도의 SLF4J 추가 없이 LoggerFactory 등 바로 사용 가능!
     }
     implementation 'org.springframework.boot:spring-boot-starter-undertow'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
@@ -43,6 +44,8 @@ dependencies {
     implementation 'com.querydsl:querydsl-jpa:5.0.0:jakarta'
 
     runtimeOnly 'com.mysql:mysql-connector-j'
+    // Jedis 클라이언트 (Redis와 통신하기 위한 라이브러리)
+    implementation 'redis.clients:jedis:4.3.1'
 
     developmentOnly 'org.springframework.boot:spring-boot-devtools'
     compileOnly 'org.projectlombok:lombok'

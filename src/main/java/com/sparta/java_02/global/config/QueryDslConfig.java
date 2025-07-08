@@ -10,7 +10,7 @@ import org.springframework.context.annotation.Configuration;
 @Configuration
 public class QueryDslConfig {
 
-  // 스프링이 사용하고있는 EntityMananger 를 자동생성(객체?)해준다.
+  // 스프링이 사용하고있는 EntityMananger 를 자동생성(객체화)해준다.
   @PersistenceContext
   private EntityManager entityManager;
 
