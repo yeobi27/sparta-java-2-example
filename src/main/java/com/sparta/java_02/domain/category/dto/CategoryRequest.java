@@ -13,7 +13,8 @@ import lombok.experimental.FieldDefaults;
 @Builder            // Builder 패턴
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class CategoryRequest {
-  Long id;
+
+  //  Long id;
   String name;
   Long parentId;
 }
