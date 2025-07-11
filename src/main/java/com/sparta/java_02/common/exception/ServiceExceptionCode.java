@@ -17,7 +17,9 @@ public enum ServiceExceptionCode {
   DUPLICATE_EMAIL("이메일이 중복되었습니다."),
   NOT_EXIST_CATEGORY("해당 카테고리가 존재하지 않습니다."),
   CANNOT_CANCEL("취소 불가능한 상태입니다."),
-  OUT_OF_STOCK_PRODUCT("재고 수량을 넘었습니다.");
+  OUT_OF_STOCK_PRODUCT("재고 수량을 넘었습니다."),
+  FAILED_SOFT_DELETE("비활성화 실패"),
+  DUPLICATED_CATEGORY("카테고리 중복");
   // ... 다른 예외 코드들
 
   final String message;

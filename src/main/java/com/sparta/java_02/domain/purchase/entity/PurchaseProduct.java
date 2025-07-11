@@ -33,7 +33,7 @@ import org.hibernate.annotations.UpdateTimestamp;
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor(access = AccessLevel.PRIVATE)
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class PurchaseProduct {
+public class PurchaseProduct {  // 구매할/한 상품
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)

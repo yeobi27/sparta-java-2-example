@@ -1,5 +1,6 @@
 package com.sparta.java_02.domain.user.repository;
 
+import com.sparta.java_02.domain.user.dto.UserResponse;
 import com.sparta.java_02.domain.user.entity.User;
 import java.time.LocalDateTime;
 import java.util.List;
@@ -23,6 +24,13 @@ public interface UserRepository extends JpaRepository<User, Long> {
 
   @Query("SELECT u FROM User u JOIN FETCH u.purchases")
   List<User> findAllWithPurchases();
+
+  List<User> findByDeletedFalse();
+
+  Optional<User> findByIdAndDeletedFalse(Long id);
+
+  // 이메일 중복 체크 등
+  Optional<User> findByEmailAndDeletedFalse(String email);
 
 //  // find 와 get 의 차이점은 get 은 반드시있고, find 는 있을수도 없을수도 있다로 정의된다.
 //  @Query("SELECT u FROM User u WHERE u.name = :name AND u.email = :email")

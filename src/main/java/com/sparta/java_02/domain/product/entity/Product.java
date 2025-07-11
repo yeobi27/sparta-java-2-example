@@ -37,10 +37,6 @@ public class Product {  // 상품
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;
 
-  @ManyToOne(fetch = FetchType.LAZY)
-  @JoinColumn(name = "category_id")
-  private Category category;
-
   @Column(nullable = false)
   private String name;
 
@@ -52,6 +48,10 @@ public class Product {  // 상품
 
   @Column(nullable = false)
   private Integer stock;
+
+  @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "category_id")
+  private Category category;
 
   @CreationTimestamp
   @Column(nullable = false, updatable = false)

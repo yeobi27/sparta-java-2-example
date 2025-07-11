@@ -66,6 +66,14 @@ public class UserService {
     userRepository.delete(getUser(userId));
   }
 
+  @Transactional
+  public void softDelete(Long userId){
+    User user = userRepository.findByIdAndDeletedFalse(userId)
+        .orElseThrow(()->new ServiceException(ServiceExceptionCode.FAILED_SOFT_DELETE));
+
+    user.softDelete();
+  }
+
   public User getUser(Long userId) {
     return userRepository.findById(userId)
         .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_FOUND_USER));

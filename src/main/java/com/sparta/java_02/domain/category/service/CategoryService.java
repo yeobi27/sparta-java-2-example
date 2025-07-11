@@ -208,23 +208,36 @@ public class CategoryService {
     }
   }
 
+  @Transactional
   public CategoryResponse createCategory(CategoryRequest request) {
     Category parent = null;
 
-//    // 부모 카테고리ID 가 있을 경우 조회하기
-//    if (request.getParentId() != null) {
-//      parent = categoryRepository.findById(request.getParentId())
-//          .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_EXIST_CATEGORY));
-//    }
-//
-////    // Category 객체 생성( Builder )
-////    Category category = Category.builder()
-////        .name(request.getName())
-////        .parent(parent)
-////        .build();
-//    Category category = categoryMapper.toEntity(request);
+    if (categoryRepository.existsByNameAndParentId(request.getName(), request.getParentId())) {
+      throw new ServiceException(ServiceExceptionCode.DUPLICATED_CATEGORY);
+    }
+
+    // 부모 카테고리ID 가 있을 경우 조회하기
+    if (request.getParentId() != null) {
+      parent = categoryRepository.findById(request.getParentId())
+          .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_EXIST_CATEGORY));
+    }
+
+    // Category 객체 생성( Builder )
+    Category category = Category.builder()
+        .name(request.getName())
+        .parent(parent)
+        .build();
+    Category saved = categoryRepository.save(category);
+
+//    CategoryRequest categoryRequest = CategoryRequest.builder()
+//          .name(request.getName())
+//          .parentId(parent != null ? parent.getId() : null)
+//          .build();
+    
+//    Category category = categoryMapper.toEntity(categoryRequest);
 //    Category saved = categoryRepository.save(category);
-//    return categoryMapper.toResponse(saved);
-    return null;
+
+    return categoryMapper.toResponse(saved);
+//    return null;
   }
 }

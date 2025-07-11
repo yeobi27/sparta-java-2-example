@@ -78,9 +78,14 @@ public class UserController {
   }
 
   // 5. (선택) 회원 삭제(Soft Delete)
-  @DeleteMapping("/{userId}")
+  @DeleteMapping("/hard/{userId}")
   public ApiResponse<String> delete(@PathVariable Long userId) {
     userService.delete(userId);
-    return ApiResponse.success("사용자가 정상적으로 삭제(비활성화)되었습니다.");
+    return ApiResponse.success("사용자가 정상적으로 삭제되었습니다.");
+  }
+  @DeleteMapping("/{userId}")
+  public ApiResponse<String> softDeleteUser(@PathVariable Long userId){
+    userService.softDelete(userId);
+    return ApiResponse.success("사용자가 정상적으로 비활성화되었습니다.");
   }
 }

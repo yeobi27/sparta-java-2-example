@@ -1,5 +1,6 @@
 package com.sparta.java_02.domain.user.entity;
 
+import com.sparta.java_02.common.entity.BaseDeletableEntity;
 import com.sparta.java_02.domain.purchase.entity.Purchase;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -31,7 +32,7 @@ import org.springframework.util.StringUtils;
 @NoArgsConstructor  // 빈생성자를 만들어준다. 항상 있는데 귀찮기 때문에
 @FieldDefaults(level = AccessLevel.PRIVATE) // 모든 접근 제한이 private 으로 바뀐다.
 //@Table(name = "user") // 테이블명(db.migration 안에있는 .sql 안에 테이블명..)과 클래스명이 완전히 같으면 생략이 가능
-public class User {
+public class User extends BaseDeletableEntity {
 
   // 생성방식이 IDENTITY 면 sql 안에 id BIGINT AUTO_INCREMENT PRIMARY KEY 의 AUTO_INCREMENT 를 따라간다.
   @Id
@@ -54,6 +55,7 @@ public class User {
   @UpdateTimestamp  // UPDATE_TIMESTAMP 와 동일
   LocalDateTime updatedAt;
 
+  // User 가 여러개의 Purchase 를 가지고 있다 = 1:N 관계
   @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
   List<Purchase> purchases = new ArrayList<>();
 

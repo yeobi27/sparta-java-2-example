@@ -11,8 +11,9 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 public interface CategoryMapper {
 
   @Mapping(source = "parent.id", target = "parentId", nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
+  @Mapping(target = "categories", ignore = true) // <- 경고 해결
   CategoryResponse toResponse(Category category);
 
-  //  @Mapping(source = "parentId", target = "parent.id")
+  @Mapping(target = "parent", ignore = true) // <- 경고 해결
   Category toEntity(CategoryRequest categoryRequest);
 }
