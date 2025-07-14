@@ -13,7 +13,5 @@ import lombok.experimental.FieldDefaults;
 public class LoginResponse {
 
   Long userId;
-
-  String name;
   String email;
 }

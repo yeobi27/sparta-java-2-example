@@ -33,6 +33,15 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-validation'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
 
+    // Spring Security 프레임워크를 통합하기 위한 의존성
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    // Spring Session과 Redis를 연동하기 위한 의존성
+    // 이 의존성을 추가하면 Redis를 세션 저장소로 사용할 수 있도록 Spring Session이 자동 구성됩니다.
+    implementation 'org.springframework.session:spring-session-data-redis'
+    // Spring Data Redis: Redis 클라이언트를 추상화하고 Spring의 데이터 접근 계층과 통합합니다.
+    // 내부적으로 Lettuce(기본) 또는 Jedis 클라이언트를 사용합니다.
+    implementation 'org.springframework.boot:spring-boot-starter-data-redis'
+
     implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.0.2'
 
     implementation 'org.flywaydb:flyway-core'
