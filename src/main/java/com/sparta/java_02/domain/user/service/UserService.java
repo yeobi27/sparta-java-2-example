@@ -9,15 +9,22 @@ import com.sparta.java_02.domain.user.dto.UserUpdateRequest;
 import com.sparta.java_02.domain.user.entity.User;
 import com.sparta.java_02.domain.user.mapper.UserMapper;
 import com.sparta.java_02.domain.user.repository.UserRepository;
+import jakarta.persistence.EntityManager;
 import jakarta.transaction.Transactional;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class UserService {
 
+  // Utils
+  private final EntityManager entityManager;
+  private final JdbcTemplate jdbcTemplate;
+
+  // Systems
   private final UserMapper userMapper;
   private final UserRepository userRepository;
 
@@ -67,9 +74,9 @@ public class UserService {
   }
 
   @Transactional
-  public void softDelete(Long userId){
+  public void softDelete(Long userId) {
     User user = userRepository.findByIdAndDeletedFalse(userId)
-        .orElseThrow(()->new ServiceException(ServiceExceptionCode.FAILED_SOFT_DELETE));
+        .orElseThrow(() -> new ServiceException(ServiceExceptionCode.FAILED_SOFT_DELETE));
 
     user.softDelete();
   }
@@ -79,4 +86,21 @@ public class UserService {
         .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_FOUND_USER));
   }
 
+  // IDENTITY 전략(AUTO_INCREMENT)은 DB에 INSERT 한 뒤에야 id 값이 결정됩니다.
+  // Hibernate가 batch insert(여러 row를 한 쿼리로 INSERT) 하려면, 각 엔티티의 id 값을 미리 알아야 하는데, IDENTITY는 알 수가 없습니다.
+  // 그래서 Hibernate는 persist 할 때마다 바로 INSERT 쿼리를 날리고, DB로부터 생성된 id 값을 받아옵니다.
+  // yml 에
+  //         jdbc:
+  //          # (필수) 한번에 묶어서 보낼 SQL 문의 개수. 50~1000 사이 값이 권장됨.
+  //          batch_size: 1000
+  @Transactional
+  public void saveAllUsers(List<User> users) {
+    String sql = "INSERT INTO user (name, email, password_hash) VALUES (?, ?, ?)";
+    int batchSize = 1000;
+    jdbcTemplate.batchUpdate(sql, users, batchSize, (ps, user) -> {
+      ps.setString(1, user.getName());  // 첫번째 name 의 ? 타겟
+      ps.setString(2, user.getEmail());  // 두번째 email 의 ? 타겟
+      ps.setString(3, user.getPasswordHash());  // 첫번째 name 의 ? 타겟
+    });
+  }
 }

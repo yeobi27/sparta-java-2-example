@@ -83,5 +83,10 @@ public class PurchaseService {
     // user 검증은 Auth 에서 수행 했다고 가정
     return purchaseCancelService.cancelPurchase(request.getPurchaseId(), request.getUserId());
   }
+
+//  @Transactional
+//  public void bulkUpdateStatus() {
+//    purchaseRepository.bulkUpdateStatus(LocalDateTime.now());
+//  }
 }
 

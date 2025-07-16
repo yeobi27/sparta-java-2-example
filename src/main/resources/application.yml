@@ -24,6 +24,12 @@ spring:
         dialect: org.hibernate.dialect.MySQL8Dialect
         format_sql: true
         highlight_sql: true
+        jdbc:
+          # (필수) 한번에 묶어서 보낼 SQL 문의 개수. 50~1000 사이 값이 권장됨.
+          batch_size: 1000
+        order_inserts: true
+        # (권장) UPDATE 문을 최적화하기 위해 재정렬
+        order_updates: true
   data:
     redis:
       host: localhost
@@ -51,3 +57,10 @@ server:
     session:
       cookie:
         http-only: true
+
+# HikariCP 커넥션 풀 현황을 보는 Spring Boot 표준 방법
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
