@@ -7,6 +7,7 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.session.data.redis.config.annotation.web.http.EnableRedisHttpSession;
 
 // 내부적으로 비동기를 쓰려면 꼭 추가해줘야하는 @EnableAsync
+// RedisHttpSession 허용
 @EnableAsync
 @EnableScheduling // 스케줄링 기능을 활성화합니다.
 @EnableRedisHttpSession

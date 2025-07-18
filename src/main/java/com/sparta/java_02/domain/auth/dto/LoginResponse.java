@@ -8,7 +8,6 @@ import lombok.experimental.FieldDefaults;
 
 @Getter
 @Builder
-@AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
 public class LoginResponse {
 
