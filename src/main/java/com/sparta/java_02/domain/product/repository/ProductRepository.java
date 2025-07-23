@@ -22,4 +22,7 @@ public interface ProductRepository extends JpaRepository<Product, Long> {
   @Query("SELECT p FROM Product p WHERE p.price >= :minPrice AND p.name LIKE %:name%")
   List<Product> searchByNameAndMinPrice(@Param("name") String name,
       @Param("minPrice") BigDecimal minPrice);
+
+  // 인자로 들어온 값보다 큰 경우
+  List<Product> findAllByStockGreaterThan(Integer stock);
 }

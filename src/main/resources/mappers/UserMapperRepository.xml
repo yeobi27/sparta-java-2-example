@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.sparta.java_02.domain.user.mapper.UserMapperRepository">
+
+
+  <!--  반환타입에 Entity -->
+  <select id="getUserById"
+    parameterType="com.sparta.java_02.domain.user.dto.UserSearchRequest"
+    resultType="com.sparta.java_02.domain.user.dto.SearchUserDto">
+    SELECT
+    id,
+    name,
+    email,
+    password_hash,
+    created_at,
+    updated_at
+    FROM users
+    <!--    <where>-->
+    <!--      &lt;!&ndash;동적쿼리 name 이 실패하면 AND 는 자동으로 없애줌&ndash;&gt;-->
+    <!--      <if test="name != null">name = #{name}</if>-->
+    <!--      <if test="email != null">AND email = #{email}</if>-->
+    <!--    </where>-->
+    <where>
+      <choose> <!-- 스위치문이라고 보면됨 -->
+        <when test="name != null">name = #{name}</when>
+        <when test="email != null">email = #{email}</when>
+        <otherwise>1=1</otherwise> <!-- default 라고 보면됨 1=1 관습적표현 -->
+      </choose>
+    </where>
+  </select>
+
+  <!-- separator="," 는 ',' 쉼표를 기점으로 한개씩 넣어준다. -->
+  <insert id="insertUser" parameterType="com.sparta.java_02.domain.user.dto.UserDto">
+    INSERT INTO user
+    VALUES
+    <foreach collection="users" item="user" separator=",">
+      (#{user.name}, #{user.email}, #{user.passwordHash}, now(), now())
+    </foreach>
+  </insert>
+
+
+  <update id="updateUser" parameterType="com.sparta.java_02.domain.user.dto.UserDto">
+    UPDATE user SET
+    name = #{name} WHERE id = #{id}
+  </update>
+
+  <delete id="deleteUser" parameterType="com.sparta.java_02.domain.user.dto.UserDto">
+    DELETE FROM user WHERE id = #{id}
+  </delete>
+
+</mapper>

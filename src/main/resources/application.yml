@@ -64,3 +64,9 @@ management:
     web:
       exposure:
         include: '*'
+# classpath 는 resource 폴더를 뜻함
+# DataClass 에는 CamelCase, xml 에는 SnakeCase 를 맞춰준다. 초기에 꼭 맞춰주던가 수동으로 맞췄을경우에는 설정하지말아라.
+mybatis:
+  configuration:
+    map-underscore-to-camel-case: true
+  mapper-locations: classpath:mappers/*.xml

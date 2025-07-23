@@ -84,4 +84,9 @@ public class Product {  // 상품
     }
     this.stock += quantity;
   }
+
+  // TODO : 시험용 테스트 케이스 후에 지울것
+  public void setStock(int newStock) {
+    this.stock = newStock;
+  }
 }
