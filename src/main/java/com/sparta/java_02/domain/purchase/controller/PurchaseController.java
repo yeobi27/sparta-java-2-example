@@ -19,7 +19,7 @@ public class PurchaseController {
 
   @PostMapping
   public ApiResponse<Void> create(@Valid @RequestBody PurchaseRequest request) {
-    purchaseService.createPurchase(request);
+    purchaseService.purchase(request);
     return ApiResponse.success();
   }
 }
