@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.sparta.java_02.domain.user.mapper.UserMapperRepository">
+<mapper namespace="com.yeobi.mall.domain.user.mapper.UserMapperRepository">
 
 
   <!--  반환타입에 Entity -->
   <select id="getUserById"
-    parameterType="com.sparta.java_02.domain.user.dto.UserSearchRequest"
-    resultType="com.sparta.java_02.domain.user.dto.SearchUserDto">
+    parameterType="com.yeobi.mall.domain.user.dto.UserSearchRequest"
+    resultType="com.yeobi.mall.domain.user.dto.SearchUserDto">
     SELECT
     id,
     name,
@@ -31,7 +31,7 @@
   </select>
 
   <!-- separator="," 는 ',' 쉼표를 기점으로 한개씩 넣어준다. -->
-  <insert id="insertUser" parameterType="com.sparta.java_02.domain.user.dto.UserDto">
+  <insert id="insertUser" parameterType="com.yeobi.mall.domain.user.dto.UserDto">
     INSERT INTO user
     VALUES
     <foreach collection="users" item="user" separator=",">
@@ -40,12 +40,12 @@
   </insert>
 
 
-  <update id="updateUser" parameterType="com.sparta.java_02.domain.user.dto.UserDto">
+  <update id="updateUser" parameterType="com.yeobi.mall.domain.user.dto.UserDto">
     UPDATE user SET
     name = #{name} WHERE id = #{id}
   </update>
 
-  <delete id="deleteUser" parameterType="com.sparta.java_02.domain.user.dto.UserDto">
+  <delete id="deleteUser" parameterType="com.yeobi.mall.domain.user.dto.UserDto">
     DELETE FROM user WHERE id = #{id}
   </delete>
 
