@@ -6,28 +6,51 @@ import com.yeobi.mall.common.exception.ServiceExceptionCode;
 import com.yeobi.mall.domain.product.entity.Product;
 import com.yeobi.mall.domain.product.repository.ProductRepository;
 import com.yeobi.mall.domain.purchase.dto.PurchaseProductRequest;
+import com.yeobi.mall.domain.purchase.dto.PurchaseRequest;
 import com.yeobi.mall.domain.purchase.entity.Purchase;
 import com.yeobi.mall.domain.purchase.entity.PurchaseProduct;
 import com.yeobi.mall.domain.purchase.repository.PurchaseProductRepository;
 import com.yeobi.mall.domain.purchase.repository.PurchaseRepository;
+import com.yeobi.mall.domain.task.service.TaskQueueService;
 import com.yeobi.mall.domain.user.entity.User;
 import com.yeobi.mall.domain.user.repository.UserRepository;
-import jakarta.transaction.Transactional;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 import lombok.RequiredArgsConstructor;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class PurchaseProcessService {
 
+  private final TaskQueueService taskQueueService;
   private final PurchaseRepository purchaseRepository;
   private final ProductRepository productRepository;
   private final PurchaseProductRepository purchaseProductRepository;
   private final UserRepository userRepository;
+
+  @Async
+  @Transactional(propagation = Propagation.REQUIRES_NEW)
+  public void purchaseProcess(Long taskQueueId, PurchaseRequest request, User user) {
+    taskQueueService.processQueueById(taskQueueId, (taskQueue) -> {
+
+      Purchase purchase = createAndSavePurchase(user);
+
+      taskQueue.setEventId(purchase.getId());
+
+      List<PurchaseProduct> purchaseProducts = createAndProcessPurchaseProducts(
+          request.getPurchaseProducts(),
+          purchase);
+
+      BigDecimal totalPrice = calculateTotalPrice(purchaseProducts);
+      purchase.setTotalPrice(totalPrice);
+    });
+  }
 
   public Purchase process(User user, List<PurchaseProductRequest> requests) {
     // 이제 purchase 메서드는 "무엇을 하는지" 명확히 보여준다.

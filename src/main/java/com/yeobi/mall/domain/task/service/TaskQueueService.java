@@ -9,6 +9,7 @@ import com.yeobi.mall.domain.task.repository.TaskQueueRepository;
 import java.util.function.Consumer;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -17,6 +18,7 @@ public class TaskQueueService {
 
   private final TaskQueueRepository taskQueueRepository;
 
+  @Transactional(propagation = Propagation.SUPPORTS)
   public TaskQueue requestQueue(TaskType taskType) {
     TaskQueue taskQueue = TaskQueue.builder()
         .taskType(taskType)

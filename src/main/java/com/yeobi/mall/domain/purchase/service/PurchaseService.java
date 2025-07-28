@@ -8,7 +8,6 @@ import com.yeobi.mall.domain.purchase.dto.PurchaseCancelRequest;
 import com.yeobi.mall.domain.purchase.dto.PurchaseCancelResponse;
 import com.yeobi.mall.domain.purchase.dto.PurchaseRequest;
 import com.yeobi.mall.domain.purchase.entity.Purchase;
-import com.yeobi.mall.domain.purchase.entity.PurchaseProduct;
 import com.yeobi.mall.domain.purchase.mapper.PurchaseMapper;
 import com.yeobi.mall.domain.purchase.repository.PurchaseRepository;
 import com.yeobi.mall.domain.task.entity.TaskQueue;
@@ -17,10 +16,7 @@ import com.yeobi.mall.domain.task.service.TaskQueueService;
 import com.yeobi.mall.domain.user.entity.User;
 import com.yeobi.mall.domain.user.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import java.math.BigDecimal;
-import java.util.List;
 import lombok.RequiredArgsConstructor;
-import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -84,28 +80,32 @@ public class PurchaseService {
   @Transactional
   public void purchaseRequest(PurchaseRequest request) {
     TaskQueue taskQueue = taskQueueService.requestQueue(TaskType.PURCHASE);
-    purchaseProcess(taskQueue.getId(), request);
+
+    User user = userRepository.findById(request.getUserId())
+        .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_FOUND_USER));
+
+    purchaseProcessService.purchaseProcess(taskQueue.getId(), request, user);
   }
 
-  @Async
-  @Transactional
-  public void purchaseProcess(Long taskQueueId, PurchaseRequest request) {
-    taskQueueService.processQueueById(taskQueueId, (taskQueue) -> {
-      User user = userRepository.findById(request.getUserId())
-          .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_FOUND_USER));
-
-      Purchase purchase = purchaseProcessService.createAndSavePurchase(user);
-
-      taskQueue.setEventId(purchase.getId());
-
-      List<PurchaseProduct> purchaseProducts = purchaseProcessService.createAndProcessPurchaseProducts(
-          request.getPurchaseProducts(),
-          purchase);
-
-      BigDecimal totalPrice = purchaseProcessService.calculateTotalPrice(purchaseProducts);
-      purchase.setTotalPrice(totalPrice);
-    });
-  }
+//  @Async
+//  @Transactional
+//  public void purchaseProcess(Long taskQueueId, PurchaseRequest request) {
+//    taskQueueService.processQueueById(taskQueueId, (taskQueue) -> {
+//      User user = userRepository.findById(request.getUserId())
+//          .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_FOUND_USER));
+//
+//      Purchase purchase = purchaseProcessService.createAndSavePurchase(user);
+//
+//      taskQueue.setEventId(purchase.getId());
+//
+//      List<PurchaseProduct> purchaseProducts = purchaseProcessService.createAndProcessPurchaseProducts(
+//          request.getPurchaseProducts(),
+//          purchase);
+//
+//      BigDecimal totalPrice = purchaseProcessService.calculateTotalPrice(purchaseProducts);
+//      purchase.setTotalPrice(totalPrice);
+//    });
+//  }
 
   @Transactional
   public Purchase purchase(PurchaseRequest request) {
