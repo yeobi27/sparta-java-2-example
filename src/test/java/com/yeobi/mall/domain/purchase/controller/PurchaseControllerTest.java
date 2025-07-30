@@ -10,10 +10,10 @@ import com.yeobi.mall.domain.purchase.dto.PurchaseRequestTest;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.extension.MediaType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
@@ -45,10 +45,11 @@ class PurchaseControllerTest {
             .contentType(MediaType.APPLICATION_JSON.toString())    // 2. 요청의 Content-Type을 JSON으로 설정
             .content(requestBody)                                  // 3. 요청 Body에 JSON 데이터 추가
             .accept(MediaType.APPLICATION_JSON.toString()))        // 4. 클라이언트가 JSON 응답을 기대함을 명시
-            .andExpect(status().isOk())                       // 5. 응답 상태 코드가 200 Created 인지 검증
-            .andExpect(MockMvcResultMatchers.jsonPath("$.result")
+        .andExpect(status().isOk())                       // 5. 응답 상태 코드가 200 Created 인지 검증
+        .andExpect(MockMvcResultMatchers.jsonPath("$.result")
             .value(true));    // 6. 응답 Body의 result 필드가 true인지 검증
   }
+
   @Test
   void 유저_없음_체크() throws Exception {
     // given : 데이터 주는거 무엇
@@ -63,7 +64,7 @@ class PurchaseControllerTest {
     // when : 언제 실행하냐
     // when & then: API를 호출하고 응답을 검증
     mockMvc.perform(post(
-                "/api/purchases")               // 1. HTTP POST 요청을 /api/purchases 로 보냄
+            "/api/purchases")               // 1. HTTP POST 요청을 /api/purchases 로 보냄
             .contentType(MediaType.APPLICATION_JSON.toString())    // 2. 요청의 Content-Type을 JSON으로 설정
             .content(requestBody)                                  // 3. 요청 Body에 JSON 데이터 추가
             .accept(MediaType.APPLICATION_JSON.toString()))        // 4. 클라이언트가 JSON 응답을 기대함을 명시
@@ -87,7 +88,7 @@ class PurchaseControllerTest {
     // when : 언제 실행하냐
     // when & then: API를 호출하고 응답을 검증
     mockMvc.perform(post(
-                "/api/purchases")               // 1. HTTP POST 요청을 /api/purchases 로 보냄
+            "/api/purchases")               // 1. HTTP POST 요청을 /api/purchases 로 보냄
             .contentType(MediaType.APPLICATION_JSON.toString())    // 2. 요청의 Content-Type을 JSON으로 설정
             .content(requestBody)                                  // 3. 요청 Body에 JSON 데이터 추가
             .accept(MediaType.APPLICATION_JSON.toString()))        // 4. 클라이언트가 JSON 응답을 기대함을 명시

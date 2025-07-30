@@ -12,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Version;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.AccessLevel;
@@ -62,8 +61,8 @@ public class Product {  // 상품
   @Column
   LocalDateTime updatedAt;
 
-  @Version  // 낙관적 락을 위한 버전 관리
-  private Integer version;
+//  @Version  // 낙관적 락을 위한 버전 관리
+//  private Integer version;
 
   @Builder
   public Product(String name, String description, BigDecimal price, Integer stock,
