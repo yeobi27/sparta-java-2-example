@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 public interface ExternalShopClient {
 
   // 외부 API Call 하는곳
+  // http://localhost:3001/products?page=1&size=10
   @GetMapping("/products")
   ExternalProductResponse getProducts(@RequestParam("page") Integer page,
       @RequestParam("size") Integer size);

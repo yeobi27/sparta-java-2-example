@@ -24,11 +24,13 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @EnableWebSecurity
 public class SecurityConfig {
 
+  // TODO : 추후에 빼기 /api/**
   private static final String[] SECURITY_EXCLUDE_PATHS = {
-      "/public/**", "/api/swagger-ui/**", "/swagger-ui/**", "/swagger-ui.html", "/swagger-ui/index.html",
+      "/public/**", "/api/swagger-ui/**", "/swagger-ui/**", "/swagger-ui.html",
+      "/swagger-ui/index.html",
       "/api/v3/api-docs/**", "/v3/api-docs/**", "/favicon.ico", "/actuator/**",
       "/swagger-resources/**", "/external/**", "/api/auth/**", "/api/users/availability",
-      "/api/users",
+      "/api/users", "/api/**"
   };
 
   private final AuthenticationFilter authenticationFilter;

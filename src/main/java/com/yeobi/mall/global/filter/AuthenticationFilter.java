@@ -20,6 +20,7 @@ import org.springframework.web.filter.OncePerRequestFilter;
 @Component
 @RequiredArgsConstructor
 public class AuthenticationFilter extends OncePerRequestFilter {
+
   /*
    * OncePerRequestFilter를 상속받아 HTTP 요청마다 실행됩니다.
    * 이 필터는 Spring Security의 기본 인증 프로세스 전에 세션 정보를 확인하고,
@@ -28,7 +29,8 @@ public class AuthenticationFilter extends OncePerRequestFilter {
    * */
   private final ObjectMapper objectMapper;
 
-  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(AuthenticationFilter.class);
+  private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
+      AuthenticationFilter.class);
 
   // 클래스 내부에 정의
   private static final AntPathMatcher pathMatcher = new AntPathMatcher();
@@ -83,6 +85,7 @@ public class AuthenticationFilter extends OncePerRequestFilter {
   }
 
   private static final String[] excludePatterns = {
+      "/api/**",  // TODO : 추후에 빼기
       "/swagger-ui/**",
       "/v3/api-docs/**",
       "/swagger-resources/**",
@@ -103,7 +106,6 @@ public class AuthenticationFilter extends OncePerRequestFilter {
     }
     return true;
   }
-
 
 //  private boolean isAuthenticationRequired(String requestURI) {
 //    // 인증이 필요하지 않은 경로들

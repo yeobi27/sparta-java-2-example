@@ -1,9 +1,12 @@
 package com.yeobi.mall.domain.product.controller;
 
 import com.yeobi.mall.common.response.ApiResponse;
+import com.yeobi.mall.domain.product.dto.AddToCartRequest;
+import com.yeobi.mall.domain.product.dto.DisplayedProduct;
 import com.yeobi.mall.domain.product.dto.ProductRequest;
 import com.yeobi.mall.domain.product.dto.ProductResponse;
 import com.yeobi.mall.domain.product.dto.ProductUpdateRequest;
+import com.yeobi.mall.domain.product.service.ProductSearchService;
 import com.yeobi.mall.domain.product.service.ProductService;
 import jakarta.validation.Valid;
 import java.util.List;
@@ -24,12 +27,14 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/api/products")
 public class ProductController {
+
   /*@RestController는 내부적으로 @ResponseBody를 포함.
   @RestController Ctrl+클릭해서 들어가보면 볼수있음
   그래서 List<Product>를 반환하면,
   Spring이 자동으로 Jackson 라이브러리를 이용해 JSON 배열로
   직렬화(serialize)함.*/
   private final ProductService productService; // Service 계층의 의존성을 주입받음
+  private final ProductSearchService productSearchService;
 
   @GetMapping("/search")
   public List<ProductResponse> searchProducts(@RequestParam String keyword) {
@@ -38,7 +43,7 @@ public class ProductController {
 
   // 1. 등록: DTO 사용 + 유효성 검증
   @PostMapping
-  public ProductResponse create(@RequestBody @Valid ProductRequest request){
+  public ProductResponse create(@RequestBody @Valid ProductRequest request) {
     return productService.create(request);
   }
 //  // 2. 전체목록 조회
@@ -48,7 +53,7 @@ public class ProductController {
 //  }
 
   @GetMapping
-  public ApiResponse<List<ProductResponse>> getAll(){
+  public ApiResponse<List<ProductResponse>> getAll() {
     return ApiResponse.success(productService.getAll());
   }
 
@@ -69,30 +74,48 @@ public class ProductController {
 //  }
 
   @GetMapping("/{id}")
-  public ApiResponse<ProductResponse> getById(@PathVariable Long id){
+  public ApiResponse<ProductResponse> getById(@PathVariable Long id) {
     return ApiResponse.success(productService.getById(id));
   }
 
-//  // 3. 수정 - PUT
+  //  // 3. 수정 - PUT
 //  @PutMapping("/{id}")
 //  public ProductResponse update(@PathVariable Long id, @RequestBody @Valid ProductUpdateRequest request){
 //    return productService.update(id, request);
 //  }
   // 3. 수정 - PUT
   @PutMapping("/{id}")
-  public ApiResponse<ProductResponse> update(@PathVariable Long id, @RequestBody @Valid ProductUpdateRequest request){
+  public ApiResponse<ProductResponse> update(@PathVariable Long id,
+      @RequestBody @Valid ProductUpdateRequest request) {
     return ApiResponse.success(productService.update(id, request));
   }
 
-//  @DeleteMapping("/{id}")
+  //  @DeleteMapping("/{id}")
 //  @ResponseStatus(HttpStatus.NO_CONTENT)  // 정상적인 200 OK 가 뜨기에는 삭제는 204 상태 코드가 적합하다.
 //  public void delete(@PathVariable Long id){
 //    productService.delete(id);
 //  }
   @DeleteMapping("/{id}")
   @ResponseStatus(HttpStatus.NO_CONTENT)  // 정상적인 200 OK 가 뜨기에는 삭제는 204 상태 코드가 적합하다.
-  public ApiResponse<Void> delete(@PathVariable Long id){
+  public ApiResponse<Void> delete(@PathVariable Long id) {
     productService.delete(id);
     return ApiResponse.success();
   }
+
+  // Gemini API 외부서치
+  @GetMapping("/gemini_search")
+  public String geminiSearch(@RequestParam String query) {
+    return productSearchService.searchProducts(query);
+  }
+
+  @GetMapping("/v2/search")
+  public List<DisplayedProduct> searchV2(@RequestParam String query) {
+    return productSearchService.searchProductsAndSaveSession(query);
+  }
+
+  @PostMapping("/cart/add-ai")
+  public List<String> addToCartByAI(@RequestBody AddToCartRequest request) {
+    return productSearchService.addProductsToCartByAI(request.getCommand());
+  }
+
 }

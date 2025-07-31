@@ -74,3 +74,8 @@ mybatis:
 external:
   external-shop:
     url: http://localhost:3001  # 외부 API URL로 설정
+
+gemini:
+  api:
+    key: # Google AI Studio에서 발급받은 키를 입력
+    url: https://generativelanguage.googleapis.com
