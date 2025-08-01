@@ -27,6 +27,7 @@ public class ProductService {
   private static final org.slf4j.Logger log = org.slf4j.LoggerFactory.getLogger(
       ProductService.class);
 
+  @Transactional
   public List<ProductResponse> searchByName(String keyword) {
     List<Product> products = productRepository.findByNameContaining(keyword);
 
@@ -52,6 +53,7 @@ public class ProductService {
   //map(ClassName::methodName)	메서드 참조 (= 축약 버전)
   // 즉, Product 리스트들 중 객체 하나씩 ProductResponse 로 
   // 바꾸는 작업을 하나씩 반복 처리한다는 뜻
+  @Transactional(readOnly = true)
   public List<ProductResponse> getAll() {
     return productRepository.findAll().stream()
         .map(productMapper::toResponse)
@@ -59,6 +61,7 @@ public class ProductService {
   }
 
   // 2-1. 단일 항목 조회
+  @Transactional
   public ProductResponse getById(Long id) {
     Product product = findProduct(id);
     return productMapper.toResponse(product);
@@ -129,11 +132,13 @@ public class ProductService {
     productRepository.save(product);
   }
 
+  @Transactional
   private Category findCategory(Long categoryId) {
     return categoryRepository.findById(categoryId)
         .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_EXIST_CATEGORY));
   }
 
+  @Transactional
   private Product findProduct(Long productId) {
     return productRepository.findById(productId)
         .orElseThrow(() -> new ServiceException(ServiceExceptionCode.NOT_FOUND_PRODUCT));
